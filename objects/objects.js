@@ -20,6 +20,7 @@
 	{
 		this.id = id
 		this.socket = socket
+		this.objInfo = {}
 	}
 
 	Player.prototype.createObject = function()
@@ -30,7 +31,10 @@
 			objInfo = physics.createCircle()
 		else
 			objInfo = physics.createRect()
+		this.objInfo = objInfo
+
 		this.socket.emit('createObject', objInfo)
+		this.socket.broadcast.emit('createObject', objInfo)
 	}
 
 	var players = (function()
@@ -42,6 +46,11 @@
 			var id = socket.id
 			var newPlayer = new Player(id, socket)
 			newPlayer.createObject()
+			for(var key in all)
+			{
+				var player = all[key]
+				socket.emit('createObject', player.objInfo)
+			}
 			all.push(newPlayer)
 
 		}
