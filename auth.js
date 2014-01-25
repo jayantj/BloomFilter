@@ -1,5 +1,6 @@
 var b2d = require("box2dnode")
 var objects = require('./objects/objects.js')
+var CONST = require('./objects/const.json')
 
 function initialize(io, express){
 	io.set('authorization', function (data, accept) {
@@ -8,8 +9,9 @@ function initialize(io, express){
 
 	io.sockets.on('connection', function (socket){
 
+		socket.emit('constants', CONST)
 		objects.players.addPlayer(socket)
-
+		
 		socket.on('disconnect', function(){
 			objects.players.removePlayer(socket)
 		});

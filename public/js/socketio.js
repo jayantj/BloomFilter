@@ -5,6 +5,10 @@ var socketio = (function()
 		{	
 			socket = io.connect(address);
 			socket.on('createWorld', physics.createWorld)
+			socket.on('constants', function(data)
+			{
+				physics.updateConstants(data)
+			})
 		}
 	}	
 })()

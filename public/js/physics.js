@@ -4,7 +4,8 @@ var physics = (function()
 	var wThickness = 1
 	var numObjects = 10
 	var minDimension = 0.5
-	
+	var constants = {}	
+
 	var createFixtureDef = function(d, f, r)
 	{	
         var fixDef = new b2FixtureDef
@@ -16,10 +17,9 @@ var physics = (function()
 
 	var createBounds = function()
 	{
-		var bodyDef = new b2BodyDef;
+		var bodyDef = new b2BodyDef
 		var fixDef = createFixtureDef()
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
-		console.log(dimensions)
 	    bodyDef.type = b2Body.b2_staticBody
 	    fixDef.shape = new b2PolygonShape
 
@@ -92,6 +92,10 @@ var physics = (function()
             	createCircle()
 	}
 
+	var updateConstants = function(data)
+	{
+		constants = data
+	}
 	return {
 		init: function()
 		{
@@ -123,6 +127,7 @@ var physics = (function()
 		createBounds: createBounds,
 		getWorld: getWorld,
 		createObjects: createObjects,
-		createCircle: createCircle
+		createCircle: createCircle,
+		updateConstants: updateConstants
 	}
 })()
