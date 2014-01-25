@@ -6,6 +6,7 @@ var app = (function()
 			physics.init()
 			draw.init()
 			physics.createBounds()
+			physics.createObjects()
 			draw.showScreen('game-screen')
 
 			// socketio.init(url)

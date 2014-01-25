@@ -2,6 +2,9 @@ var physics = (function()
 {
 	var world
 	var wThickness = 1
+	var numObjects = 10
+	var minDimension = 0.5
+	
 	var createFixtureDef = function(d, f, r)
 	{	
         var fixDef = new b2FixtureDef
@@ -40,6 +43,55 @@ var physics = (function()
 		return world
 	}
 
+	var createCircle = function(radius, d, f, r)
+	{
+		var dimensions = draw.getDimensions(), scale = draw.getScale()
+		radius = radius|| Math.random()+minDimension
+
+		var fixDef = createFixtureDef(d, f, r)
+		fixDef.shape = new b2CircleShape(radius);
+
+        var bodyDef = new b2BodyDef;
+        bodyDef.type = b2Body.b2_dynamicBody;
+
+        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
+        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
+
+        bodyDef.position.x = minX + Math.random() * (maxX - minX)
+        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
+	}
+
+	var createRect = function(height, width, d, f, r)
+	{
+		var dimensions = draw.getDimensions(), scale = draw.getScale()
+		height = height|| Math.random()+minDimension
+		width = width|| Math.random()+minDimension
+		
+		var fixDef = createFixtureDef(d, f, r)
+		fixDef.shape = new b2PolygonShape();
+		fixDef.shape.SetAsBox(height/2, width/2)
+
+        var bodyDef = new b2BodyDef;
+        bodyDef.type = b2Body.b2_dynamicBody;
+
+        var minX = wThickness + width/2, maxX = dimensions.width/scale - wThickness - width/2
+        var minY = wThickness + height/2, maxY = dimensions.height/scale - wThickness - height/2
+
+        bodyDef.position.x = minX + Math.random() * (maxX - minX)
+        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+        world.CreateBody(bodyDef).CreateFixture(fixDef);
+	}
+
+	var createObjects = function()
+	{
+        for(var i = 0; i < numObjects; ++i) 
+            if(Math.random() > 0.5) 
+				createRect()
+	        else 
+            	createCircle()
+	}
+
 	return {
 		init: function()
 		{
@@ -63,6 +115,8 @@ var physics = (function()
 		},
 
 		createBounds: createBounds,
-		getWorld: getWorld
+		getWorld: getWorld,
+		createObjects: createObjects,
+		createCircle: createCircle
 	}
 })()
