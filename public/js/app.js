@@ -5,7 +5,10 @@ var app = (function()
 		{
 			physics.init()
 			draw.init()
-			socketio.init(url)
-		}
+			physics.createBounds()
+			draw.showScreen('game-screen')
+
+			// socketio.init(url)
+		},
 	}
 })()

@@ -3,7 +3,7 @@ html {
 }
 body {
   margin-top: 30px;
-  background: url("/images/main-bg.jpg");
+  background-color: #000;
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
@@ -23,15 +23,8 @@ body {
   -moz-border-radius: 12px;
   border-radius: 12px;
 }
-.game-list td,
-th {
-  text-align: center;
-}
-#side-bar {
-  height: 100%;
-  width: 15%;
+#game-canvas {
   position: absolute;
-  right: 0;
-  z-index: 1;
-  background-color: rgba(127,127,127,0.85);
+  left: 0;
+  top: 0;
 }
