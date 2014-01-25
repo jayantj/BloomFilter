@@ -10,6 +10,8 @@ function initialize(io, express){
 	io.sockets.on('connection', function (socket){
 
 		socket.emit('constants', CONST)
+		socket.emit('createWorld')
+
 		objects.players.addPlayer(socket)
 		
 		socket.on('disconnect', function(){

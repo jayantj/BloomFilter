@@ -9,6 +9,7 @@ var socketio = (function()
 			{
 				physics.updateConstants(data)
 			})
+			socket.on('createObject', physics.createObject)
 		}
 	}	
 })()

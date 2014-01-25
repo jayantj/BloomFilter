@@ -1,6 +1,7 @@
 (function() 
 {
 	var CONST = require('./const.json') 
+	physics = require('./physics.js').physics,
 	Box2D = require("box2dnode"),
 	b2Vec2 = Box2D.b2Vec2,
   	b2AABB = Box2D.b2AABB,
@@ -19,7 +20,17 @@
 	{
 		this.id = id
 		this.socket = socket
-		this.world = new b2World(new b2Vec2(0, CONST.gravity), true)
+	}
+
+	Player.prototype.createObject = function()
+	{
+		// console.log(physics)
+		var objInfo = {}
+		if(Math.random() > 0.5)
+			objInfo = physics.createCircle()
+		else
+			objInfo = physics.createRect()
+		this.socket.emit('createObject', objInfo)
 	}
 
 	var players = (function()
@@ -29,8 +40,10 @@
 		var addPlayer = function(socket)
 		{
 			var id = socket.id
-			all.push(new Player(id, socket))
-			socket.emit('createWorld', CONST.gravity)
+			var newPlayer = new Player(id, socket)
+			newPlayer.createObject()
+			all.push(newPlayer)
+
 		}
 		var getPlayer = function(socket)
 		{

@@ -42,10 +42,23 @@ var physics = (function()
 		return world
 	}
 
-	var createCircle = function(radius, d, f, r)
+	var getScalingFactor = function(dimensions, scale)
+	{
+		var fromWidth = (constants.maxX - constants.minX)
+    	var toWidth = dimensions.width/scale
+    	var scaleX = toWidth/fromWidth
+
+    	var fromHeight = (constants.maxY - constants.minY)
+    	var toHeight = dimensions.height/scale
+    	var scaleY = toHeight/fromHeight
+
+    	return {'scaleX':scaleX, 'scaleY':scaleY}
+	}
+	var createCircle = function(radius, x, y, d, f, r)
 	{
 		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
+
 		radius = radius|| Math.random()+minDimension
 
 		var fixDef = createFixtureDef(d, f, r)
@@ -54,15 +67,26 @@ var physics = (function()
         var bodyDef = new b2BodyDef;
         bodyDef.type = b2Body.b2_dynamicBody;
 
-        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
-        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
+        if(!x || !y)
+        {
+	        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
+	        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
 
-        bodyDef.position.x = minX + Math.random() * (maxX - minX)
-        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+	        bodyDef.position.x = minX + Math.random() * (maxX - minX)
+	        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+        }
+        else
+        {
+			var scaling = getScalingFactor(dimensions, scale)
+
+        	bodyDef.position.x = x * scaling.scaleX
+	        bodyDef.position.y = y * scaling.scaleY
+	        console.log(bodyDef.position)
+        }
         world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
-	var createRect = function(height, width, d, f, r)
+	var createRect = function(height, width, x, y, d, f, r)
 	{
 		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
@@ -76,15 +100,26 @@ var physics = (function()
         var bodyDef = new b2BodyDef;
         bodyDef.type = b2Body.b2_dynamicBody;
 
-        var minX = wThickness + width/2, maxX = dimensions.width/scale - wThickness - width/2
-        var minY = wThickness + height/2, maxY = dimensions.height/scale - wThickness - height/2
+        if(!x || !y)
+        {
+	        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
+	        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
 
-        bodyDef.position.x = minX + Math.random() * (maxX - minX)
-        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+	        bodyDef.position.x = minX + Math.random() * (maxX - minX)
+	        bodyDef.position.y = minY + Math.random() * (maxY - minY)
+        }
+        else
+        {
+			var scaling = getScalingFactor(dimensions, scale)
+
+        	bodyDef.position.x = x * scaling.scaleX
+	        bodyDef.position.y = y * scaling.scaleY
+	        console.log(bodyDef.position)
+        }
         world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
-	var createObjects = function()
+	var randomiseObjects = function()
 	{
         for(var i = 0; i < numObjects; ++i) 
             if(Math.random() > 0.5) 
@@ -93,6 +128,18 @@ var physics = (function()
             	createCircle()
 	}
 
+	var createObject = function(data)
+	{
+		console.log(data)
+		switch(data.type)
+		{
+			case 'circle':	createCircle(data.radius, data.pos.x, data.pos.y)
+							break
+			case 'rect':	createRect(data.h, data.w, data.pos.x, data.pos.y)
+							break
+		}
+
+	}
 	var updateConstants = function(data)
 	{
 		constants = data
@@ -114,20 +161,21 @@ var physics = (function()
           	b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef
 		},
 
-		createWorld: function(gravity)
+		createWorld: function()
 		{
-			gravity = parseInt(gravity)
+			gravity = constants.gravity
 	        world = new b2World(
 	            new b2Vec2(0, gravity),    //gravity
 				true                 //allow sleep
          	)
 			draw.init()
          	createBounds()
-			createObjects()
+			// createObjects()
 		},
 		createBounds: createBounds,
 		getWorld: getWorld,
-		createObjects: createObjects,
+		createObject: createObject,
+		randomiseObjects: randomiseObjects,
 		createCircle: createCircle,
 		updateConstants: updateConstants
 	}
