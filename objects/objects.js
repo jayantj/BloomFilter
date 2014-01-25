@@ -14,7 +14,7 @@
 	b2CircleShape = Box2D.b2CircleShape,
 	b2DebugDraw = Box2D.b2DebugDraw,
   	b2MouseJointDef =  Box2D.b2MouseJointDef
-         
+
 	function Player(id, socket)
 	{
 		this.id = id
@@ -28,17 +28,15 @@
 		var lastID = 0
 		var addPlayer = function(socket)
 		{
-			var id = ++lastID
-			socket.id = id
-			console.log(id, socket.id)
+			var id = socket.id
 			all.push(new Player(id, socket))
+			socket.emit('createWorld', CONST.gravity)
 		}
 		var getPlayer = function(socket)
 		{
 			for(var key in all)
 			{
 				var player = all[key]
-				console.log(player.id, socket.id)				
 				if(player.id == socket.id)
 					return player
 				return {}
