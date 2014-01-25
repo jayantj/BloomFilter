@@ -11,7 +11,6 @@ function initialize (app){
 		res.render('index',
 		{
 		})
-		global.log('verbose', 'Sent homepage to client: ' + req.connection.remoteAddress);
 	});
 
 	app.get('*', function(req, res){
