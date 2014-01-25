@@ -4,6 +4,7 @@ var socketio = (function()
 		init: function(address)
 		{	
 			socket = io.connect(address);
+			socket.on('createWorld', physics.createWorld)
 		}
 	}	
 })()

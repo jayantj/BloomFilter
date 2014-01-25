@@ -19,7 +19,7 @@ var physics = (function()
 		var bodyDef = new b2BodyDef;
 		var fixDef = createFixtureDef()
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
-
+		console.log(dimensions)
 	    bodyDef.type = b2Body.b2_staticBody
 	    fixDef.shape = new b2PolygonShape
 
@@ -107,13 +107,19 @@ var physics = (function()
      		b2CircleShape = Box2D.Collision.Shapes.b2CircleShape,
      		b2DebugDraw = Box2D.Dynamics.b2DebugDraw,
           	b2MouseJointDef =  Box2D.Dynamics.Joints.b2MouseJointDef
-         
-	        world = new b2World(
-	            new b2Vec2(0, 10),    //gravity
-				true                 //allow sleep
-         	)
 		},
 
+		createWorld: function(gravity)
+		{
+			gravity = parseInt(gravity)
+	        world = new b2World(
+	            new b2Vec2(0, gravity),    //gravity
+				true                 //allow sleep
+         	)
+			draw.init()
+         	createBounds()
+			createObjects()
+		},
 		createBounds: createBounds,
 		getWorld: getWorld,
 		createObjects: createObjects,
