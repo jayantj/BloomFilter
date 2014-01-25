@@ -13,6 +13,17 @@ var physics = (function()
         return fixDef
 	}
 
+	var createBodyDef = function(x, y, dimensions, scale)
+	{
+		var bodyDef = new b2BodyDef;
+        bodyDef.type = b2Body.b2_dynamicBody;
+
+		var scaling = getScalingFactor(dimensions, scale)
+
+    	bodyDef.position.x = x * scaling.scaleX
+        bodyDef.position.y = y * scaling.scaleY
+        return bodyDef
+	}
 	var createBounds = function()
 	{
 		var wThickness = constants.wThickness
@@ -64,11 +75,11 @@ var physics = (function()
 		var fixDef = createFixtureDef(d, f, r)
 		fixDef.shape = new b2CircleShape(radius);
 
-        var bodyDef = new b2BodyDef;
-        bodyDef.type = b2Body.b2_dynamicBody;
-
         if(!x || !y)
         {
+        	var bodyDef = new b2BodyDef;
+	        bodyDef.type = b2Body.b2_dynamicBody;
+
 	        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
 	        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
 
@@ -76,13 +87,7 @@ var physics = (function()
 	        bodyDef.position.y = minY + Math.random() * (maxY - minY)
         }
         else
-        {
-			var scaling = getScalingFactor(dimensions, scale)
-
-        	bodyDef.position.x = x * scaling.scaleX
-	        bodyDef.position.y = y * scaling.scaleY
-	        console.log(bodyDef.position)
-        }
+        	var bodyDef = createBodyDef(x, y, dimensions, scale)
         world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
@@ -97,25 +102,19 @@ var physics = (function()
 		fixDef.shape = new b2PolygonShape();
 		fixDef.shape.SetAsBox(height/2, width/2)
 
-        var bodyDef = new b2BodyDef;
-        bodyDef.type = b2Body.b2_dynamicBody;
-
         if(!x || !y)
         {
-	        var minX = wThickness + radius, maxX = dimensions.width/scale - wThickness - radius
-	        var minY = wThickness + radius, maxY = dimensions.height/scale - wThickness - radius
+	        var bodyDef = new b2BodyDef;
+	        bodyDef.type = b2Body.b2_dynamicBody;
+
+	        var minX = wThickness + width/2, maxX = dimensions.width/scale - wThickness - width/2
+	        var minY = wThickness + height/2, maxY = dimensions.height/scale - wThickness - height/2
 
 	        bodyDef.position.x = minX + Math.random() * (maxX - minX)
 	        bodyDef.position.y = minY + Math.random() * (maxY - minY)
         }
         else
-        {
-			var scaling = getScalingFactor(dimensions, scale)
-
-        	bodyDef.position.x = x * scaling.scaleX
-	        bodyDef.position.y = y * scaling.scaleY
-	        console.log(bodyDef.position)
-        }
+        	var bodyDef = createBodyDef(x, y, dimensions, scale)
         world.CreateBody(bodyDef).CreateFixture(fixDef);
 	}
 
