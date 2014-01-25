@@ -1,0 +1,37 @@
+html {
+  height: 100%;
+}
+body {
+  margin-top: 30px;
+  background: url("/images/main-bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+}
+.game-layer {
+  padding-top: 30%;
+}
+.white-wrap {
+  background-color: rgba(255,255,255,0.9);
+}
+.splash-button {
+  width: 200px;
+  height: 75px;
+  opacity: 0.7;
+  font-size: 25px;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  border-radius: 12px;
+}
+.game-list td,
+th {
+  text-align: center;
+}
+#side-bar {
+  height: 100%;
+  width: 15%;
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(127,127,127,0.85);
+}

@@ -1,0 +1,32 @@
+doctype html
+html(lang='en')
+	head
+		title Physics
+
+		meta(name = 'viewport', content = 'width=device-width, initial-scale=1.0')  
+		script(src='/js/lib/jquery.min.js')
+
+		link(rel ='stylesheet', type='text/css', href='/css/bootstrap.min.css', media = 'screen')
+		link(rel ='stylesheet', type='text/css', href='/css/bootstrap-responsive.min.css', media = 'screen')
+		link(rel ='stylesheet', type='text/css', href='/css/index.css')
+
+		script(src='/socket.io/socket.io.js')
+		script(src='/js/lib/bootstrap.min.js')
+		script(src='/js/lib/Box2dWeb-2.1.a.3.min.js')
+
+		script(src='/js/app.js')
+		script(src='/js/draw.js')
+		script(src='/js/physics.js')
+		script(src='/js/socketio.js')
+	body 
+		div(class = 'container game-layer' id='start-screen')
+				div(id = 'start-game', class = 'span12 text-center splash-column')
+					button(type = 'button', class = 'btn btn-primary btn-lg', id='start-btn') Start
+
+		div(class = 'game-layer' id='game-screen')
+			div(id='game-canvas')
+
+		script(type='text/javascript').
+			$(window).load(function(){
+				app.init('http://localhost:8080');
+			});
