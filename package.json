@@ -1,0 +1,12 @@
+{
+     "name": "BloomFilter",
+     "description": "A multiplayer physics environment",
+     "version": "0.0.1",
+     "dependencies": {
+        "express": "",
+        "socket.io": "",
+        "jade": "",
+        "stylus": "",
+        "request":""
+     }
+}
