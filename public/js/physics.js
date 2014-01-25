@@ -1,7 +1,6 @@
 var physics = (function()
 {
 	var world
-	var wThickness = 1
 	var numObjects = 10
 	var minDimension = 0.5
 	var constants = {}	
@@ -17,6 +16,7 @@ var physics = (function()
 
 	var createBounds = function()
 	{
+		var wThickness = constants.wThickness
 		var bodyDef = new b2BodyDef
 		var fixDef = createFixtureDef()
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
@@ -45,6 +45,7 @@ var physics = (function()
 
 	var createCircle = function(radius, d, f, r)
 	{
+		var wThickness = constants.wThickness
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
 		radius = radius|| Math.random()+minDimension
 
@@ -64,6 +65,7 @@ var physics = (function()
 
 	var createRect = function(height, width, d, f, r)
 	{
+		var wThickness = constants.wThickness
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
 		height = height|| Math.random()+minDimension
 		width = width|| Math.random()+minDimension

@@ -3,7 +3,7 @@ var draw = (function()
 	var drawScale 	  =	30.0,
 		alphaFactor   = 0.9,
 		lineThickness = 1.0
-	var wDimensions = {'height':0, 'width': 0}
+	var cDimensions = {'height':0, 'width': 0}
 	var update = function()
 	{
         physics.getWorld().Step(1 / 60, 10, 10);
@@ -20,11 +20,12 @@ var draw = (function()
 	var setDimensions = function()
 	{
 		var w = $(window).innerWidth(), h = $(window).innerHeight()
-		wDimensions.height = h
-		wDimensions.width = w
+		var squareDimension = (h<w)? h : w
+		cDimensions.width = squareDimension, cDimensions.height = squareDimension
+		
 		var canvas = $('#game-canvas')[0]
-		canvas.width = wDimensions.width
-		canvas.height = wDimensions.height
+		canvas.width = cDimensions.width
+		canvas.height = cDimensions.height
 	}
 	return {
 		init: function()
@@ -48,7 +49,7 @@ var draw = (function()
 		},
 		getDimensions: function()
 		{
-			return wDimensions
+			return cDimensions
 		}
 	}
 })()
