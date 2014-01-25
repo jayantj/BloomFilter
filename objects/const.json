@@ -4,5 +4,6 @@
 	"maxX":100,
 	"minY":0,
 	"maxY":100,
-	"wThickness":1
+	"wThickness":1,
+	"minDimension":0.5
 }

@@ -2,7 +2,6 @@ var physics = (function()
 {
 	var world
 	var numObjects = 10
-	var minDimension = 0.5
 	var constants = {}	
 
 	var createFixtureDef = function(d, f, r)
@@ -45,7 +44,7 @@ var physics = (function()
 
 	var createCircle = function(radius, d, f, r)
 	{
-		var wThickness = constants.wThickness
+		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
 		radius = radius|| Math.random()+minDimension
 
@@ -65,7 +64,7 @@ var physics = (function()
 
 	var createRect = function(height, width, d, f, r)
 	{
-		var wThickness = constants.wThickness
+		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
 		height = height|| Math.random()+minDimension
 		width = width|| Math.random()+minDimension
