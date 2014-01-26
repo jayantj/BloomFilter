@@ -41,20 +41,16 @@
 		    fixDef.shape.SetAsBox(dimensions.width/(2*scale), wThickness/2)
 		    bodyDef.position.Set(dimensions.width/(2*scale), wThickness/2)
 		    world.CreateBody(bodyDef).CreateFixture(fixDef)
-		    console.log(bodyDef.position)
 
 		    bodyDef.position.Set(dimensions.width/(2*scale), dimensions.height/scale - wThickness/2)
 		    world.CreateBody(bodyDef).CreateFixture(fixDef)
-		    console.log(bodyDef.position)
 
 		    fixDef.shape.SetAsBox(wThickness/2, dimensions.height/(2*scale))
 		    bodyDef.position.Set(wThickness/2, dimensions.height/(2*scale))
 		    world.CreateBody(bodyDef).CreateFixture(fixDef)
-		    console.log(bodyDef.position)
 
 		    bodyDef.position.Set(dimensions.width/scale - wThickness/2, dimensions.height/(2*scale))
 		    world.CreateBody(bodyDef).CreateFixture(fixDef)
-		    console.log(bodyDef.position)
 		}
 		var createFixtureDef = function(d, f, r)
 		{	
@@ -82,10 +78,7 @@
 	        bodyDef.position.y = objY
 	        var body = world.CreateBody(bodyDef)
 	        body.CreateFixture(fixDef)
-	        setInterval(function()
-	        {
-	        	console.log(body.GetPosition())
-	        }, 200)
+	        
 	        return {'body':body, 'radius':radius}
 		}
 
@@ -110,10 +103,6 @@
 	        var body = world.CreateBody(bodyDef)
 	       	body.CreateFixture(fixDef)
 
-	       	setInterval(function()
-	        {
-	        	console.log(body.GetPosition())
-	        }, 200)
 	        return {'body':body, 'w':width, 'h':height}
 		}
 
