@@ -4,6 +4,7 @@ var physics = (function()
 	var numObjects = 10
 	var constants = {}	
 	var playerBodies = {}
+	var playerID = ''
 
 	var createFixtureDef = function(d, f, r)
 	{	
@@ -148,6 +149,7 @@ var physics = (function()
 			case 'rect':	createRect(data.player, data.h, data.w, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
 		}
+		playerID = data.player
 	}
 
 	var destroyObject = function(data)
@@ -160,6 +162,21 @@ var physics = (function()
 	{
 		constants = data
 	}
+
+	var updateVelocity = function(x, y, player)
+	{	
+		var id = player || playerID
+
+		var body = playerBodies[id]
+		var currVel = body.GetLinearVelocity()
+		console.log(body, currVel)
+		currVel.x += x
+		currVel.y += y
+		body.SetLinearVelocity(currVel)
+		if(!player)
+			socket.emit('updateVelocity', {'x':x, 'y':y})
+	}
+
 	return {
 		init: function()
 		{
@@ -186,6 +203,7 @@ var physics = (function()
          	)
 			draw.init()
          	createBounds()
+         	input.init()
 			// createObjects()
 		},
 		createBounds: createBounds,
@@ -195,6 +213,7 @@ var physics = (function()
 		destroyObject: destroyObject,
 		randomiseObjects: randomiseObjects,
 		createCircle: createCircle,
-		updateConstants: updateConstants
+		updateConstants: updateConstants,
+		updateVelocity: updateVelocity
 	}
 })()
