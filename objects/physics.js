@@ -21,14 +21,20 @@
 		var wThickness = CONST.wThickness
 		var dimensions = {'width':(CONST.maxX-CONST.minX), 'height':(CONST.maxY-CONST.minY)}, scale = 1
 		var world = new b2World(new b2Vec2(0, CONST.gravity), false)
+		var now, previous
 		var init = function()
 		{
+			previous = new Date()
 			createBounds()
 	     	setInterval(update, 1000 / CONST.fps);
 		}
 		var update = function()
 		{
-			world.Step(1 / 60, 10, 10);
+			now = new Date()
+			var deltaTime = now - previous
+			previous = now
+
+			world.Step(deltaTime/1000, 10, 10);
 	        world.ClearForces();
 		}
 		var createBounds = function()
