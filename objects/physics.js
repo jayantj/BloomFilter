@@ -21,7 +21,15 @@
 		var wThickness = CONST.wThickness
 		var dimensions = {'width':(CONST.maxX-CONST.minX), 'height':(CONST.maxY-CONST.minY)}, scale = 1
 		var world = new b2World(new b2Vec2(0, CONST.gravity), true)
-
+		var init = function()
+		{
+	     	setInterval(update, 1000 / 60);
+		}
+		var update = function()
+		{
+			world.Step(1 / 60, 10, 10);
+	        world.ClearForces();
+		}
 		var createFixtureDef = function(d, f, r)
 		{	
 	        var fixDef = new b2FixtureDef
@@ -48,7 +56,7 @@
 	        bodyDef.position.y = objY
 	        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-	        return {'type':'circle', 'radius':radius, 'pos':{'x':objX, 'y':objY}}
+	        return {'bodyDef':bodyDef, 'radius':radius}
 		}
 
 		var createRect = function(height, width, d, f, r)
@@ -71,12 +79,17 @@
 	        bodyDef.position.y = objY
 	        world.CreateBody(bodyDef).CreateFixture(fixDef);
 
-	        return {'type':'rect', 'w':width, 'h':height, 'pos':{'x':objX, 'y':objY}}
+	        return {'bodyDef':bodyDef, 'w':width, 'h':height}
 		}
 
 		return {
+			init: init, 
 			createRect: createRect,
-			createCircle: createCircle
+			createCircle: createCircle,
+			getWorld: function()
+			{
+				return world
+			}
 		}
   	})()
 

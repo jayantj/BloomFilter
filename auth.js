@@ -1,8 +1,10 @@
 var b2d = require("box2dnode")
 var objects = require('./objects/objects.js')
 var CONST = require('./objects/const.json')
+var	physics = require('./objects/physics.js').physics
 
 function initialize(io, express){
+	physics.init()
 	io.set('authorization', function (data, accept) {
     	return accept(null, true)
 	});

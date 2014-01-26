@@ -20,7 +20,23 @@
 	{
 		this.id = id
 		this.socket = socket
-		this.objInfo = {}
+		this.bodyInfo = {}
+	}
+
+	Player.prototype.getObjInfo = function()
+	{
+		var bodyInfo = this.bodyInfo, bodyDef = this.bodyDef
+		var objInfo = {'type':bodyInfo.type, 'pos': {'x':bodyDef.position.x, 'y':bodyDef.position.y}}
+		switch(bodyInfo.type)
+		{
+			case 'circle': 	objInfo.radius = bodyInfo.radius
+							break
+			case 'rect': 	objInfo.w = bodyInfo.w
+							objInfo.h = bodyInfo.h
+		}
+
+		console.log(bodyDef.position)
+		return objInfo
 	}
 
 	Player.prototype.createObject = function()
@@ -28,11 +44,18 @@
 		// console.log(physics)
 		var objInfo = {}
 		if(Math.random() > 0.5)
-			objInfo = physics.createCircle()
+		{
+			body = physics.createCircle()
+			this.bodyInfo = {'type':'circle', 'radius':body.radius}
+		}
 		else
-			objInfo = physics.createRect()
-		this.objInfo = objInfo
+		{
+			body = physics.createRect()
+			this.bodyInfo = {'type':'rect', 'w':body.w, 'h':body.h}
+		}
 
+		this.bodyDef = body.bodyDef
+		var objInfo = this.getObjInfo()
 		this.socket.emit('createObject', objInfo)
 		this.socket.broadcast.emit('createObject', objInfo)
 	}
@@ -49,7 +72,7 @@
 			for(var key in all)
 			{
 				var player = all[key]
-				socket.emit('createObject', player.objInfo)
+				socket.emit('createObject', player.getObjInfo())
 			}
 			all.push(newPlayer)
 
