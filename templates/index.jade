@@ -29,5 +29,5 @@ html(lang='en')
 
 		script(type='text/javascript').
 			$(window).load(function(){
-				app.init('http://localhost:8080');
+				app.init('http://#{locals.ip}:#{locals.port}');
 			});

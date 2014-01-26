@@ -1,4 +1,5 @@
 var fs = require('fs');
+var helper = require('./helper.js')
 
 function initialize (app){
 	
@@ -10,6 +11,8 @@ function initialize (app){
 	app.get('/', function (req, res) {
 		res.render('index',
 		{
+			ip:helper.getIP(),
+			port:helper.getPort()
 		})
 	});
 
