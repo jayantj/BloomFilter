@@ -59,6 +59,18 @@
 		this.socket.broadcast.emit('createObject', objInfo)
 	}
 
+	Player.prototype.updateVelocity = function(data)
+	{
+		console.log(data)
+		var x = data.x, y = data.y
+		var body = this.body
+		var currVel = body.GetLinearVelocity()
+		currVel.x += x
+		currVel.y += y
+		body.SetLinearVelocity(currVel)
+		socket.broadcast.emit('updateVelocity', {'id':this.id, 'x':x, 'y':y})
+	}
+
 	var players = (function()
 	{
 		var all = []
@@ -73,6 +85,7 @@
 				var player = all[key]
 				socket.emit('createObject', player.getObjInfo())
 			}
+			socket.on('updateVelocty', newPlayer.updateVelocity)
 			all.push(newPlayer)
 
 		}

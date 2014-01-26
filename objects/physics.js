@@ -20,7 +20,7 @@
 		var minDimension = CONST.minDimension
 		var wThickness = CONST.wThickness
 		var dimensions = {'width':(CONST.maxX-CONST.minX), 'height':(CONST.maxY-CONST.minY)}, scale = 1
-		var world = new b2World(new b2Vec2(0, CONST.gravity), true)
+		var world = new b2World(new b2Vec2(0, CONST.gravity), false)
 		var init = function()
 		{
 			createBounds()
@@ -78,7 +78,7 @@
 	        bodyDef.position.y = objY
 	        var body = world.CreateBody(bodyDef)
 	        body.CreateFixture(fixDef)
-	        
+
 	        return {'body':body, 'radius':radius}
 		}
 
