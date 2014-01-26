@@ -22,13 +22,13 @@ var draw = (function()
 		var w = $(window).innerWidth(), h = $(window).innerHeight()
 		var squareDimension = (h<w)? h : w
 		cDimensions.width = squareDimension, cDimensions.height = squareDimension
-		
+
 		var canvas = $('#game-canvas')[0]
 		canvas.width = cDimensions.width
 		canvas.height = cDimensions.height
 	}
 	return {
-		init: function()
+		init: function(fps)
 		{	
 			setDimensions()
 
@@ -40,7 +40,7 @@ var draw = (function()
 			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
 			physics.getWorld().SetDebugDraw(debugDraw);
          
-	     	window.setInterval(update, 1000 / 60);
+	     	window.setInterval(update, 1000 / fps);
 		},
 		showScreen: showScreen,
 		getScale: function()

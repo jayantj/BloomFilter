@@ -206,7 +206,7 @@ var physics = (function()
 	            new b2Vec2(0, gravity),    //gravity
 				false                 //allow sleep
          	)
-			draw.init()
+			draw.init(constants.fps)
          	createBounds()
          	input.init()
 			// createObjects()

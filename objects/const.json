@@ -5,5 +5,6 @@
 	"minY":0,
 	"maxY":100,
 	"wThickness":1,
-	"minDimension":0.5
+	"minDimension":0.5,
+	"fps": 30
 }

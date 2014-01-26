@@ -24,7 +24,7 @@
 		var init = function()
 		{
 			createBounds()
-	     	setInterval(update, 1000 / 60);
+	     	setInterval(update, 1000 / CONST.fps);
 		}
 		var update = function()
 		{
