@@ -92,7 +92,12 @@
 			{
 				var player = all[key]
 				if(player.id == socket.id)
+				{
+					var world = physics.getWorld()
+					world.DestroyBody(player.body)
+					socket.broadcast.emit('destroyObject', player.id)
 					all.splice(key, 1)
+				}
 			}
 		}
 		return {

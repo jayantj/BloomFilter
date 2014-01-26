@@ -97,7 +97,7 @@ var physics = (function()
 
         var body = world.CreateBody(bodyDef)
         body.CreateFixture(fixDef);
-        playerBodies.player = body
+        playerBodies[player] = body
 	}
 
 	var createRect = function(player, height, width, x, y, d, f, r)
@@ -127,7 +127,7 @@ var physics = (function()
 
 		var body = world.CreateBody(bodyDef)
         body.CreateFixture(fixDef);
-        playerBodies.player = body
+        playerBodies[player] = body
 	}
 
 	var randomiseObjects = function()
@@ -148,7 +148,13 @@ var physics = (function()
 			case 'rect':	createRect(data.player, data.h, data.w, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
 		}
-		console.log(playerBodies)
+	}
+
+	var destroyObject = function(data)
+	{
+		var body = playerBodies[data]
+		world.DestroyBody(body)
+		delete playerBodies[data]
 	}
 	var updateConstants = function(data)
 	{
@@ -186,6 +192,7 @@ var physics = (function()
 		getWorld: getWorld,
 		getPlayerBody: getPlayerBody,
 		createObject: createObject,
+		destroyObject: destroyObject,
 		randomiseObjects: randomiseObjects,
 		createCircle: createCircle,
 		updateConstants: updateConstants

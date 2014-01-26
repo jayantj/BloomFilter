@@ -10,6 +10,7 @@ var socketio = (function()
 				physics.updateConstants(data)
 			})
 			socket.on('createObject', physics.createObject)
+			socket.on('destroyObject', physics.destroyObject)
 		}
 	}	
 })()
