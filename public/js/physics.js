@@ -163,18 +163,22 @@ var physics = (function()
 		constants = data
 	}
 
-	var updateVelocity = function(x, y, player)
+	var updateVelocity = function(data)
 	{	
-		var id = player || playerID
-
+		var id = data.player || playerID
+		var x = data.x, y = data.y
 		var body = playerBodies[id]
 		var currVel = body.GetLinearVelocity()
-		console.log(body, currVel)
-		currVel.x += x
-		currVel.y += y
+		var scaling = getScalingFactor(draw.getDimensions(), draw.getScale()), magFactor = constants.gravity/2
+		var dx = x*magFactor, dy = y*magFactor
+
+		console.log(scaling, currVel, dx, dy)
+		currVel.x += dx*scaling.scaleX
+		currVel.y += dy*scaling.scaleY
 		body.SetLinearVelocity(currVel)
-		if(!player)
-			socket.emit('updateVelocity', {'x':x, 'y':y})
+
+		if(!(data.player))
+			socket.emit('updateVelocity', {'x':dx, 'y':dy})
 	}
 
 	return {
@@ -199,7 +203,7 @@ var physics = (function()
 			gravity = constants.gravity
 	        world = new b2World(
 	            new b2Vec2(0, gravity),    //gravity
-				true                 //allow sleep
+				false                 //allow sleep
          	)
 			draw.init()
          	createBounds()
