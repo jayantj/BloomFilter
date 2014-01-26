@@ -132,9 +132,9 @@ var physics = (function()
 		console.log(data)
 		switch(data.type)
 		{
-			case 'circle':	createCircle(data.radius, data.pos.x, data.pos.y)
+			case 'circle':	createCircle(data.radius, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
-			case 'rect':	createRect(data.h, data.w, data.pos.x, data.pos.y)
+			case 'rect':	createRect(data.h, data.w, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
 		}
 

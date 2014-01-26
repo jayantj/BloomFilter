@@ -23,12 +23,38 @@
 		var world = new b2World(new b2Vec2(0, CONST.gravity), true)
 		var init = function()
 		{
+			createBounds()
 	     	setInterval(update, 1000 / 60);
 		}
 		var update = function()
 		{
 			world.Step(1 / 60, 10, 10);
 	        world.ClearForces();
+		}
+		var createBounds = function()
+		{
+			var bodyDef = new b2BodyDef
+			var fixDef = createFixtureDef()
+		    bodyDef.type = b2Body.b2_staticBody
+		    fixDef.shape = new b2PolygonShape
+
+		    fixDef.shape.SetAsBox(dimensions.width/(2*scale), wThickness/2)
+		    bodyDef.position.Set(dimensions.width/(2*scale), wThickness/2)
+		    world.CreateBody(bodyDef).CreateFixture(fixDef)
+		    console.log(bodyDef.position)
+
+		    bodyDef.position.Set(dimensions.width/(2*scale), dimensions.height/scale - wThickness/2)
+		    world.CreateBody(bodyDef).CreateFixture(fixDef)
+		    console.log(bodyDef.position)
+
+		    fixDef.shape.SetAsBox(wThickness/2, dimensions.height/(2*scale))
+		    bodyDef.position.Set(wThickness/2, dimensions.height/(2*scale))
+		    world.CreateBody(bodyDef).CreateFixture(fixDef)
+		    console.log(bodyDef.position)
+
+		    bodyDef.position.Set(dimensions.width/scale - wThickness/2, dimensions.height/(2*scale))
+		    world.CreateBody(bodyDef).CreateFixture(fixDef)
+		    console.log(bodyDef.position)
 		}
 		var createFixtureDef = function(d, f, r)
 		{	
@@ -56,6 +82,10 @@
 	        bodyDef.position.y = objY
 	        var body = world.CreateBody(bodyDef)
 	        body.CreateFixture(fixDef)
+	        setInterval(function()
+	        {
+	        	console.log(body.GetPosition())
+	        }, 200)
 	        return {'body':body, 'radius':radius}
 		}
 
@@ -80,6 +110,10 @@
 	        var body = world.CreateBody(bodyDef)
 	       	body.CreateFixture(fixDef)
 
+	       	setInterval(function()
+	        {
+	        	console.log(body.GetPosition())
+	        }, 200)
 	        return {'body':body, 'w':width, 'h':height}
 		}
 
