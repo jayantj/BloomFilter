@@ -23,7 +23,6 @@ function initialize(io, express){
 		// Debug
 		socket.on('PING', function(){
 			// console.log('PING RECEIVED');
-			console.log(objects.players.getPlayer(socket))
 		});
 	});
 }

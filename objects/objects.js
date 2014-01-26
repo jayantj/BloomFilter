@@ -21,12 +21,13 @@
 		this.id = id
 		this.socket = socket
 		this.bodyInfo = {}
+		this.body = {}
 	}
 
 	Player.prototype.getObjInfo = function()
 	{
-		var bodyInfo = this.bodyInfo, bodyDef = this.bodyDef
-		var objInfo = {'type':bodyInfo.type, 'pos': {'x':bodyDef.position.x, 'y':bodyDef.position.y}}
+		var bodyInfo = this.bodyInfo, body = this.body
+		var objInfo = {'type':bodyInfo.type, 'pos': {'x':body.GetPosition().x, 'y':body.GetPosition().y}}
 		switch(bodyInfo.type)
 		{
 			case 'circle': 	objInfo.radius = bodyInfo.radius
@@ -35,13 +36,11 @@
 							objInfo.h = bodyInfo.h
 		}
 
-		console.log(bodyDef.position)
 		return objInfo
 	}
 
 	Player.prototype.createObject = function()
 	{
-		// console.log(physics)
 		var objInfo = {}
 		if(Math.random() > 0.5)
 		{
@@ -54,7 +53,7 @@
 			this.bodyInfo = {'type':'rect', 'w':body.w, 'h':body.h}
 		}
 
-		this.bodyDef = body.bodyDef
+		this.body = body.body
 		var objInfo = this.getObjInfo()
 		this.socket.emit('createObject', objInfo)
 		this.socket.broadcast.emit('createObject', objInfo)

@@ -54,9 +54,9 @@
 	        var objX = minX + Math.random() * (maxX - minX), objY = minY + Math.random() * (maxY - minY)
 	        bodyDef.position.x = objX
 	        bodyDef.position.y = objY
-	        world.CreateBody(bodyDef).CreateFixture(fixDef);
-
-	        return {'bodyDef':bodyDef, 'radius':radius}
+	        var body = world.CreateBody(bodyDef)
+	        body.CreateFixture(fixDef)
+	        return {'body':body, 'radius':radius}
 		}
 
 		var createRect = function(height, width, d, f, r)
@@ -77,9 +77,10 @@
 	        var objX = minX + Math.random() * (maxX - minX), objY = minY + Math.random() * (maxY - minY)
 	        bodyDef.position.x = objX
 	        bodyDef.position.y = objY
-	        world.CreateBody(bodyDef).CreateFixture(fixDef);
+	        var body = world.CreateBody(bodyDef)
+	       	body.CreateFixture(fixDef)
 
-	        return {'bodyDef':bodyDef, 'w':width, 'h':height}
+	        return {'body':body, 'w':width, 'h':height}
 		}
 
 		return {
