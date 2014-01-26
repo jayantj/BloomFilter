@@ -11,7 +11,7 @@ var socketio = (function()
 			})
 			socket.on('createObject', physics.createObject)
 			socket.on('destroyObject', physics.destroyObject)
-			socket.on('updateVelocty', physics.updateVelocty)
+			socket.on('updateVelocity', physics.updateVelocity)
 		}
 	}	
 })()

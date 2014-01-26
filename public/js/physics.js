@@ -166,19 +166,20 @@ var physics = (function()
 	var updateVelocity = function(data)
 	{	
 		var id = data.player || playerID
+		console.log(data, id)
 		var x = data.x, y = data.y
 		var body = playerBodies[id]
 		var currVel = body.GetLinearVelocity()
 		var scaling = getScalingFactor(draw.getDimensions(), draw.getScale()), magFactor = constants.gravity/2
 		var dx = x*magFactor, dy = y*magFactor
 
-		console.log(scaling, currVel, dx, dy)
+		// console.log(body, id, currVel, dx, dy)
 		currVel.x += dx*scaling.scaleX
 		currVel.y += dy*scaling.scaleY
 		body.SetLinearVelocity(currVel)
 
 		if(!(data.player))
-			socket.emit('updateVelocity', {'x':dx, 'y':dy})
+			socket.emit('updateVelocity', {'x':dx, 'y':dy, 'id':id})
 	}
 
 	return {
@@ -218,6 +219,14 @@ var physics = (function()
 		randomiseObjects: randomiseObjects,
 		createCircle: createCircle,
 		updateConstants: updateConstants,
-		updateVelocity: updateVelocity
+		updateVelocity: updateVelocity,
+		playerBodies: function()
+		{
+			return playerBodies
+		},
+		playerID: function()
+		{
+			return playerID
+		}
 	}
 })()
