@@ -3,6 +3,7 @@ var physics = (function()
 	var world
 	var numObjects = 10
 	var constants = {}	
+	var playerBodies = {}
 
 	var createFixtureDef = function(d, f, r)
 	{	
@@ -53,6 +54,11 @@ var physics = (function()
 		return world
 	}
 
+	var getPlayerBody = function()
+	{
+		return playerBody
+	}
+
 	var getScalingFactor = function(dimensions, scale)
 	{
 		var fromWidth = (constants.maxX - constants.minX)
@@ -65,7 +71,7 @@ var physics = (function()
 
     	return {'scaleX':scaleX, 'scaleY':scaleY}
 	}
-	var createCircle = function(radius, x, y, d, f, r)
+	var createCircle = function(player, radius, x, y, d, f, r)
 	{
 		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
@@ -88,10 +94,13 @@ var physics = (function()
         }
         else
         	var bodyDef = createBodyDef(x, y, dimensions, scale)
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+        var body = world.CreateBody(bodyDef)
+        body.CreateFixture(fixDef);
+        playerBodies.player = body
 	}
 
-	var createRect = function(height, width, x, y, d, f, r)
+	var createRect = function(player, height, width, x, y, d, f, r)
 	{
 		var wThickness = constants.wThickness, minDimension = constants.minDimension
 		var dimensions = draw.getDimensions(), scale = draw.getScale()
@@ -115,7 +124,10 @@ var physics = (function()
         }
         else
         	var bodyDef = createBodyDef(x, y, dimensions, scale)
-        world.CreateBody(bodyDef).CreateFixture(fixDef);
+
+		var body = world.CreateBody(bodyDef)
+        body.CreateFixture(fixDef);
+        playerBodies.player = body
 	}
 
 	var randomiseObjects = function()
@@ -129,15 +141,14 @@ var physics = (function()
 
 	var createObject = function(data)
 	{
-		console.log(data)
 		switch(data.type)
 		{
-			case 'circle':	createCircle(data.radius, Math.floor(data.pos.x), Math.floor(data.pos.y))
+			case 'circle':	createCircle(data.player, data.radius, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
-			case 'rect':	createRect(data.h, data.w, Math.floor(data.pos.x), Math.floor(data.pos.y))
+			case 'rect':	createRect(data.player, data.h, data.w, Math.floor(data.pos.x), Math.floor(data.pos.y))
 							break
 		}
-
+		console.log(playerBodies)
 	}
 	var updateConstants = function(data)
 	{
@@ -173,6 +184,7 @@ var physics = (function()
 		},
 		createBounds: createBounds,
 		getWorld: getWorld,
+		getPlayerBody: getPlayerBody,
 		createObject: createObject,
 		randomiseObjects: randomiseObjects,
 		createCircle: createCircle,

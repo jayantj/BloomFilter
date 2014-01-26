@@ -27,7 +27,7 @@
 	Player.prototype.getObjInfo = function()
 	{
 		var bodyInfo = this.bodyInfo, body = this.body
-		var objInfo = {'type':bodyInfo.type, 'pos': {'x':body.GetPosition().x, 'y':body.GetPosition().y}}
+		var objInfo = {'player':this.id, 'type':bodyInfo.type, 'pos': {'x':body.GetPosition().x, 'y':body.GetPosition().y}}
 		switch(bodyInfo.type)
 		{
 			case 'circle': 	objInfo.radius = bodyInfo.radius
